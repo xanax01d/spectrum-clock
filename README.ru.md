@@ -1,45 +1,58 @@
+<div align="center">
+
 # spectrum-clock
 
-[English](README.md) | **Русский**
+**Терминальный аудиоспектроанализатор, часы и синхронизированный плеер текста песен на Rust**
 
-Терминальный аудиоспектроанализатор реального времени, часы и синхронизированный плеер текста песен на Rust (`ratatui`, `rustfft`, `cpal`).
+[![Rust](https://img.shields.io/badge/Rust-2024%20Edition-orange?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=for-the-badge)](#требования)
 
-Основная платформа — **Windows Terminal** (захват системного звука через WASAPI loopback и интеграция с Windows Media Session / SMTC), с кроссплатформенным fallback через `cpal`.
+[English](README.md) · **Русский**
+
+</div>
+
+---
+
+```text
+  ✦         ·              •                  ✦                 ·
+      ██  ▄█▀▄  ▄█▀▄   ▀   █▄ ▄█  ▄█▀▄       ·         •
+      ██  █  █  █  █   ▄   █ ▀ █  █  █
+      ██  ▀█▄▀  ▀█▄▀   ▀   █   █  ▀█▄▀    2026-11-13 • Friday • +8°C Clear
+                 ▶ Artist — Track Title
+             ━━━━━━━━━━━━●────────────────────── 01:42 / 03:18
+                     ♪ Текущая строка текста песни
+      ▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁
+   Cover | Bars (Full) | Bg:Stars | 1.4x | [AGC] | WASAPI Loopback
+```
+
+Написан на [`ratatui`](https://ratatui.rs/), [`rustfft`](https://crates.io/crates/rustfft) и [`cpal`](https://crates.io/crates/cpal). Основная платформа — **Windows Terminal** (захват системного звука через WASAPI loopback и интеграция с Windows Media Session / SMTC), с кроссплатформенным fallback через `cpal`.
+
+---
 
 ## Возможности
 
-- **7 режимов визуализации (`M`)**: `Bars`, `Mirror`, `Waveform`, `Waterfall`, `Circle`, `Horizon`, `Lissajous`
-- **9 встроенных тем + кастомные темы (`T`)**:
-  - `Cover` (адаптивная палитра из обложки текущего трека)
-  - `Cyberpunk`, `Synthwave`, `Neon`, `Rainbow`, `Matrix`, `Fire`, `Ocean`
-  - `System` (системный акцентный цвет ОС)
-  - Пользовательские темы из `themes.conf`
-- **4 шрифта крупных часов (`F`)**: `Block`, `Neon`, `Segment`, `Dots`
-- **6 анимированных фоновых эффектов (`B`)**: `Stars`, `Matrix`, `Aurora`, `Pulse`, `Fire`, `Off`
-- **Синхронизированный текст песен и Lyrics Mode (`Y`)**:
-  - Переключение между **1 строкой**, **3 строками караоке** (`Prev / Active / Next`) и **полноэкранным Lyrics Mode**
-  - Автоматическая загрузка `.lrc` (с fallback на `plainLyrics`) с `lrclib.net`
-- **Now Playing и управление медиаплеером (Windows SMTC)**:
-  - Отображение текущего трека, прогресс-бара и пиксельной обложки 12×6 (`I`)
-  - Пауза/воспроизведение (`Space`), предыдущий (`←`), следующий (`→`)
-- **Погода рядом с датой (`K`)**:
-  - Фоновый запрос к `wttr.in` раз в 30 минут (автоопределение локации или указанный `weather_city`)
-- **Idle Sleep (`L`)**:
-  - Автоматически скрывает спектр после 15 секунд тишины, оставляя только часы, текст песни и фоновый эффект; мгновенно пробуждается при появлении звука
-- **Аудио и интерфейс**:
-  - FFT в реальном времени с диапазонами `Full` (30 Гц–16 кГц), `Bass` (25–250 Гц), `Mids` (250 Гц–4 кГц) (`E`)
-  - Автоусиление AGC (`A`) и ручное усиление (`+` / `-` или `↑` / `↓`)
-  - Стерео VU-метры L/R и определение BPM
-  - Отражение под полосами (`R`), плотность полос (`D`), сдвиг пикселей OLED (`O`), компактный виджет (`C`), автоскрытие футера Zen (`Z`), Party-режим (`X`)
-  - Встроенные режимы: Часы / Помодоро / Секундомер (`W`, `Enter` — сброс) и будильник (`N` — отключить)
-  - В нижней панели отображаются только активные функции и режимы
+| Категория | Что внутри |
+| --- | --- |
+| **Визуализация (`M`)** | `Bars`, `Mirror`, `Waveform`, `Waterfall`, `Circle`, `Horizon`, `Lissajous` |
+| **Темы (`T`)** | `Cover` (адаптивная палитра из обложки трека), `Cyberpunk`, `Synthwave`, `Neon`, `Rainbow`, `Matrix`, `Fire`, `Ocean`, `System` + свои темы в `themes.conf` |
+| **Часы и таймеры (`F`, `W`)** | 4 шрифта (`Block`, `Neon`, `Segment`, `Dots`) · Часы / Помодоро / Секундомер · Будильник (`N`) |
+| **Фоновые эффекты (`B`)** | `Stars`, `Matrix`, `Aurora`, `Pulse`, `Fire`, `Off` |
+| **Текст песен (`Y`)** | Цикл `1 строка` → `3 строки караоке` → `Полноэкранный Lyrics Mode` через [`lrclib.net`](https://lrclib.net) (`.lrc` + `plainLyrics` fallback) |
+| **Now Playing** | Трек и прогресс-бар из Windows SMTC, пиксельная обложка 12×6 (`I`), управление плеером (`Space`, `←`, `→`) |
+| **Погода и Idle Sleep** | **Погода (`K`)** рядом с датой (`wttr.in`, раз в 30 мин) · **Idle Sleep (`L`)** скрывает спектр через 15с тишины |
+| **Аудио и интерфейс** | 2048-точечный FFT (`Full` / `Bass` / `Mids`), автоусиление (`A`), VU-метры L/R, BPM, отражение (`R`), защита OLED (`O`), компактный режим (`C`), Zen (`Z`) |
 
-## Требования
+---
+
+## Быстрый старт
+
+### Требования
 
 - **Rust** (Edition 2024, например Rust 1.85+)
 - Терминал с поддержкой **TrueColor (24-bit RGB)** и Unicode (рекомендуется Windows Terminal)
 
-## Установка и запуск
+### Сборка и запуск
 
 ```bash
 git clone https://github.com/xanax01d/spectrum-clock.git
@@ -47,20 +60,25 @@ cd spectrum-clock
 cargo run --release
 ```
 
-Проверка тестов и линтера:
+<details>
+<summary>Проверка тестов и линтера</summary>
 
 ```bash
 cargo clippy --all-targets -- -D warnings
 cargo test
 ```
 
+</details>
+
+---
+
 ## Управление и горячие клавиши
 
 | Клавиша | Действие | Клавиша | Действие |
-| --- | --- | --- | --- |
+| :---: | --- | :---: | --- |
 | `T` | Переключить цветовую тему | `Space` | Пауза / Воспроизведение |
 | `M` | Переключить режим спектра | `←` / `→` | Предыдущий / Следующий трек |
-| `F` | Переключить шрифт часов | `+` / `-` (или `↑` / `↓`) | Изменить усиление |
+| `F` | Переключить шрифт часов | `+` / `-` · `↑` / `↓` | Изменить усиление |
 | `B` | Переключить фоновый эффект | `A` | Автоусиление (AGC) |
 | `Y` | Режим текста (`1L` / `3L` / `Full`) | `Enter` | Сбросить Помодоро / Секундомер |
 | `W` | Часы / Помодоро / Секундомер | `X` | Party-режим (автосмена) |
@@ -70,7 +88,9 @@ cargo test
 | `O` | Защита OLED (сдвиг пикселей) | `P` | Заморозить спектр |
 | `C` | Компактный режим | `K` | Показ погоды |
 | `Z` | Zen-режим (автоскрытие панели) | `L` | Idle Sleep (сон в тишине) |
-| `?` / `H` | Помощь | `Q` / `Esc` | Выход |
+| `?` / `H` | Справка | `Q` / `Esc` | Выход |
+
+---
 
 ## Конфигурация
 
@@ -79,22 +99,29 @@ cargo test
 - **Windows**: `%APPDATA%\spectrum-clock\config.conf`
 - **Linux / macOS**: `~/.config/spectrum-clock/config.conf`
 
-Подробное описание всех параметров, будильника и кастомных тем (`themes.conf`) — в [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
+Подробное описание всех ключей, формата будильника (`HH:MM|Message`), `weather_city` и кастомных тем `themes.conf` — в **[docs/CONFIGURATION.md](docs/CONFIGURATION.md)**.
 
-## Архитектура
+---
 
-- `src/main.rs` — главный цикл, обработка клавиш, координация модулей и сохранение конфига
-- `src/audio.rs` — захват аудио (WASAPI loopback на Windows и `cpal`)
-- `src/fft.rs` — 2048-точечный FFT-анализатор, AGC, bass pulse и оценка BPM
-- `src/ui.rs` — виджеты `ratatui`, режимы спектра, Lyrics Mode, VU-метры и оверлеи
-- `src/clock.rs` — крупные шрифты часов, таймер Помодоро и секундомер
-- `src/theme.rs` — встроенные палитры, системный акцент и парсер `themes.conf`
-- `src/particles.rs` — движок фоновых эффектов
-- `src/now_playing.rs` — интеграция с Windows SMTC и извлечение палитры из обложки
-- `src/lyrics.rs` — фоновая загрузка `.lrc` / текста песен с `lrclib.net`
-- `src/weather.rs` — фоновый опрос погоды с `wttr.in`
-- `src/config.rs` — сериализация и парсинг `config.conf` и `themes.conf`
+<details>
+<summary>Архитектура проекта</summary>
+
+| Модуль | Назначение |
+| --- | --- |
+| `src/main.rs` | Главный цикл, обработка клавиш, координация модулей и конфиг |
+| `src/audio.rs` | Захват аудио (WASAPI loopback на Windows и `cpal`) |
+| `src/fft.rs` | 2048-точечный FFT-анализатор, AGC, bass pulse и оценка BPM |
+| `src/ui.rs` | Разметка `ratatui`, 7 режимов спектра, Lyrics Mode, VU-метры, оверлеи |
+| `src/clock.rs` | 4 шрифта часов, таймер Помодоро и секундомер |
+| `src/theme.rs` | Встроенные палитры, системный акцент и парсер `themes.conf` |
+| `src/particles.rs` | Движок анимированных фоновых эффектов |
+| `src/now_playing.rs` | Интеграция с Windows SMTC и палитра из обложки трека |
+| `src/lyrics.rs` | Фоновая загрузка `.lrc` / `plainLyrics` с `lrclib.net` |
+| `src/weather.rs` | Фоновый опрос погоды с `wttr.in` |
+| `src/config.rs` | Сериализация и парсинг `config.conf` и `themes.conf` |
+
+</details>
 
 ## Лицензия
 
-Проект распространяется под лицензией [MIT License](LICENSE).
+Проект распространяется под лицензией **[MIT License](LICENSE)**.
