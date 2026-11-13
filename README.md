@@ -1,5 +1,7 @@
 # spectrum-clock
 
+**English** | [Русский](README.ru.md)
+
 A real-time terminal audio spectrum analyzer, clock, and synced lyrics viewer built in Rust with `ratatui`, `rustfft`, and `cpal`.
 
 Designed primarily for Windows Terminal (with WASAPI loopback capture and Windows Media Session integration), with cross-platform audio fallback.
@@ -40,7 +42,7 @@ Designed primarily for Windows Terminal (with WASAPI loopback capture and Window
 ## Installation & Running
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/xanax01d/spectrum-clock.git
 cd spectrum-clock
 cargo run --release
 ```
