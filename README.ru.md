@@ -14,17 +14,11 @@
 
 ---
 
-```text
-  ✦         ·              •                  ✦                 ·
-      ██  ▄█▀▄  ▄█▀▄   ▀   █▄ ▄█  ▄█▀▄       ·         •
-      ██  █  █  █  █   ▄   █ ▀ █  █  █
-      ██  ▀█▄▀  ▀█▄▀   ▀   █   █  ▀█▄▀    2026-11-13 • Friday • +8°C Clear
-                 ▶ Artist — Track Title
-             ━━━━━━━━━━━━●────────────────────── 01:42 / 03:18
-                     ♪ Текущая строка текста песни
-      ▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁
-   Cover | Bars (Full) | Bg:Stars | 1.4x | [AGC] | WASAPI Loopback
-```
+<div align="center">
+
+![spectrum-clock preview](docs/preview-ru.png)
+
+</div>
 
 Написан на [`ratatui`](https://ratatui.rs/), [`rustfft`](https://crates.io/crates/rustfft) и [`cpal`](https://crates.io/crates/cpal). Основная платформа — **Windows Terminal** (захват системного звука через WASAPI loopback и интеграция с Windows Media Session / SMTC), с кроссплатформенным fallback через `cpal`.
 

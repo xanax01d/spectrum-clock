@@ -14,17 +14,11 @@
 
 ---
 
-```text
-  ✦         ·              •                  ✦                 ·
-      ██  ▄█▀▄  ▄█▀▄   ▀   █▄ ▄█  ▄█▀▄       ·         •
-      ██  █  █  █  █   ▄   █ ▀ █  █  █
-      ██  ▀█▄▀  ▀█▄▀   ▀   █   █  ▀█▄▀    2026-11-13 • Friday • +8°C Clear
-                 ▶ Artist — Track Title
-             ━━━━━━━━━━━━●────────────────────── 01:42 / 03:18
-                     ♪ Current synced lyric line
-      ▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁▂▃▅▇█▇▅▃▂▁▂▄▆█▆▄▂▁
-   Cover | Bars (Full) | Bg:Stars | 1.4x | [AGC] | WASAPI Loopback
-```
+<div align="center">
+
+![spectrum-clock preview](docs/preview-en.png)
+
+</div>
 
 Built with [`ratatui`](https://ratatui.rs/), [`rustfft`](https://crates.io/crates/rustfft), and [`cpal`](https://crates.io/crates/cpal). Designed primarily for **Windows Terminal** (WASAPI loopback capture + Windows Media Session integration), with cross-platform audio fallback.
 
